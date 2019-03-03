@@ -1,0 +1,36 @@
+body{
+	margin: 0;
+	background: #ededed;
+}
+
+#box{
+	position: absolute;
+	left: 535px;
+	top: 40px;
+	width: 850px;
+	height: 850px;
+	background: #20252a;
+}
+
+#move_box{
+	position: relative;
+	width: 50px;
+	height: 50px;
+	background: #fbbe18;
+	cursor: pointer;
+}
+
+#start{
+	position: absolute;
+	top: 425px;
+	left: 910px;
+	width: 100px;
+	height: 80px;
+	background: #9B3636;
+	font-size: 25px;
+	font-family: cursive;
+	font-weight: bold;
+	border: 1px double #9B3636;
+	border-radius: 10px;
+	outline: none;
+}
