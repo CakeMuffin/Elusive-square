@@ -1,76 +1,189 @@
-var box = document.getElementById('move_box');
+var move_box = document.getElementById('move_box');
 var position_x = 400;
 var position_y = 400;
-box.style.left = position_x+'px';
-box.style.top = position_y+'px';
+var points = 0;
+var x_time = 50;
+var y_time = 50;
+move_box.style.left = position_x + 'px';
+move_box.style.top = position_y + 'px';
 var click = document.getElementById("start")
-click.onclick = function start (){
-	click.setAttribute("disabled", "disabled");
-	click.style.display = 'none';
+click.onclick = function start() {
+  click.style.display = 'none';
 
 
 
-//The function of generating random numbers in the range, is used in the setInterval method and in the function of random coordinates.
-function getRandomInRange(min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-var x_time = getRandomInRange(1, 15);
-var y_time = getRandomInRange(1, 15);
-	var t_x = setInterval(move_x, x_time);//Launch functions with random coordinates and moving the "box" element in x axle.
-	var t_y = setInterval(move_y, y_time);//Launch functions with random coordinates and moving the "box" element in y axle.
+//The function of generating random numbers in the range for random coordinates.
+  function getRandomInRange(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  var t_x = setInterval(move_x, x_time); //Launch functions with random coordinates and moving the "box" element in x axle.
+  var t_y = setInterval(move_y, y_time); //Launch functions with random coordinates and moving the "box" element in y axle.
 
 
-//The function of moving the element "box" in x axie.
-function move_x() {
-	if (position_x >= 800 || position_x <= 0) {
-		clearInterval(t_x);
-		clearInterval(t_y);
-		click.removeAttribute('disabled');
-		box.style.pointerEvents = 'none';
-		click.style.display = 'block';
-		position_x = 400;
-	}else if (position_x >= 400) {
-		position_x += 1;
-		box.style.left = position_x+'px';
-		box.style.pointerEvents = 'unset';
-	}else {
-		position_x -= 1;
-		box.style.left = position_x+'px';
-		box.style.pointerEvents = 'unset';
-	}
-}
+//The function of moving the element "box" in x axie. 
+  function move_x() {
+    if (position_x >= 800 || position_x <= 0) {
+      clearInterval(t_x);
+      clearInterval(t_y);
+      points = 0;
+      move_box.style.pointerEvents = 'none';
+      click.style.display = 'block';
+      position_x = 400;
+    } else if (position_x >= 400) {
+      position_x += 1;
+      move_box.style.left = position_x + 'px';
+      move_box.style.pointerEvents = 'unset';
+    } else {
+      position_x -= 1;
+      move_box.style.left = position_x + 'px';
+      move_box.style.pointerEvents = 'unset';
+    }
+  }
 
 //The function of moving the element "box" in y axie.
-function move_y() {
-	if (position_y >= 800 || position_y <= 0) {
-		clearInterval(t_x);
-		clearInterval(t_y);
-		click.removeAttribute('disabled');
-		box.style.pointerEvents = 'none';
-		click.style.display = 'block';
-		position_y = 400;
-	}else if (position_y >= 400) {
-		position_y += 1;
-		box.style.top = position_y+'px';
-		box.style.pointerEvents = 'unset';
-	}else {
-		position_y -= 1;
-		box.style.top = position_y+'px';
-		box.style.pointerEvents = 'unset';
-	}
-}
+  function move_y() {
+    if (position_y >= 800 || position_y <= 0) {
+      clearInterval(t_x);
+      clearInterval(t_y);
+      points = 0;
+      move_box.style.pointerEvents = 'none';
+      click.style.display = 'block';
+      position_y = 400;
+    } else if (position_y >= 400) {
+      position_y += 1;
+      move_box.style.top = position_y + 'px';
+      move_box.style.pointerEvents = 'unset';
+    } else {
+      position_y -= 1;
+      move_box.style.top = position_y + 'px';
+      move_box.style.pointerEvents = 'unset';
+    }
+  }
 
-//The function of random coordinates.
-box.onclick = function (){
+//Constantly check position of "move_box" and reset timer to stop animation wen hit borders.
+  move_box.onclick = function() {
+    setInterval(move_z, 1);
 
-	var n = getRandomInRange(1, 799);
-	var m = getRandomInRange(1, 799);
-	box.style.left = n+'px';
-	box.style.top = m+'px';
+    function move_z() {
+      if (position_y >= 800 || position_y <= 0 || position_x >= 800 || position_x <= 0) {
+        clearInterval(t_x);
+        clearInterval(t_y);
+      }
+    }
 
-	position_x = n;
-	position_y = m;
-}
+    var n = getRandomInRange(50, 750);
+    var m = getRandomInRange(50, 750);
+    move_box.style.left = n + 'px';
+    move_box.style.top = m + 'px';
 
+    position_x = n;
+    position_y = m;
+
+    //score system
+    switch (points) {
+      case 0: // level 1
+        points = 1;
+        x_time = 45;
+        y_time = 45;
+        clearInterval(t_x);
+        clearInterval(t_y);
+        var t_x = setInterval(move_x, x_time);
+        var t_y = setInterval(move_y, y_time);
+        break;
+
+      case 1: // level 2
+        points = 2;
+        x_time = 38;
+        y_time = 38;
+        clearInterval(t_x);
+        clearInterval(t_y);
+        var t_x = setInterval(move_x, x_time);
+        var t_y = setInterval(move_y, y_time);
+        break;
+
+      case 2: // level 3
+        points = 3;
+        x_time = 35;
+        y_time = 35;
+        clearInterval(t_x);
+        clearInterval(t_y);
+        var t_x = setInterval(move_x, x_time);
+        var t_y = setInterval(move_y, y_time);
+        break;
+
+      case 3: // level 4
+        points = 4;
+        x_time = 28;
+        y_time = 28;
+        clearInterval(t_x);
+        clearInterval(t_y);
+        var t_x = setInterval(move_x, x_time);
+        var t_y = setInterval(move_y, y_time);
+        break;
+
+      case 4: // level 5
+        points = 5;
+        x_time = 25;
+        y_time = 25;
+        clearInterval(t_x);
+        clearInterval(t_y);
+        var t_x = setInterval(move_x, x_time);
+        var t_y = setInterval(move_y, y_time);
+        break;
+
+      case 5: // level 6
+        points = 6;
+        x_time = 22;
+        y_time = 22;
+        clearInterval(t_x);
+        clearInterval(t_y);
+        var t_x = setInterval(move_x, x_time);
+        var t_y = setInterval(move_y, y_time);
+        break;
+
+      case 6: // level 7
+        points = 7;
+        x_time = 18;
+        y_time = 18;
+        clearInterval(t_x);
+        clearInterval(t_y);
+        var t_x = setInterval(move_x, x_time);
+        var t_y = setInterval(move_y, y_time);
+        break;
+
+      case 7: // level 8
+        points = 8;
+        x_time = 15;
+        y_time = 15;
+        clearInterval(t_x);
+        clearInterval(t_y);
+        var t_x = setInterval(move_x, x_time);
+        var t_y = setInterval(move_y, y_time);
+        break;
+
+      case 8: // level 9
+        points = 9;
+        x_time = 8;
+        y_time = 8;
+        clearInterval(t_x);
+        clearInterval(t_y);
+        var t_x = setInterval(move_x, x_time);
+        var t_y = setInterval(move_y, y_time);
+        break;
+
+      case 9: // level 10
+        points = 10;
+        x_time = 3;
+        y_time = 3;
+        clearInterval(t_x);
+        clearInterval(t_y);
+        var t_x = setInterval(move_x, x_time);
+        var t_y = setInterval(move_y, y_time);
+        break;
+
+      default:
+        alert('YOU WIN!');
+        break;
+    }
+  }
 }
