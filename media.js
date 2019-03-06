@@ -2,11 +2,14 @@ var move_box = document.getElementById('move_box');
 var position_x = 400;
 var position_y = 400;
 var points = 0;
+var level = 0;
 var x_time = 50;
 var y_time = 50;
 move_box.style.left = position_x + 'px';
 move_box.style.top = position_y + 'px';
 var click = document.getElementById("start")
+
+
 click.onclick = function start() {
   click.style.display = 'none';
 
@@ -62,6 +65,10 @@ click.onclick = function start() {
 
 //Constantly check position of "move_box" and reset timer to stop animation wen hit borders.
   move_box.onclick = function() {
+    document.getElementById('points').value = points;
+    document.getElementById('level').value = level;
+    console.log(points);
+    
     setInterval(move_z, 1);
 
     function move_z() {
@@ -82,7 +89,8 @@ click.onclick = function start() {
     //score system
     switch (points) {
       case 0: // level 1
-        points = 1;
+        level = 1;
+        points += 1;
         x_time = 45;
         y_time = 45;
         clearInterval(t_x);
@@ -91,8 +99,9 @@ click.onclick = function start() {
         var t_y = setInterval(move_y, y_time);
         break;
 
-      case 1: // level 2
-        points = 2;
+      case 5: // level 2
+        level = 2;
+        points += 1;
         x_time = 38;
         y_time = 38;
         clearInterval(t_x);
@@ -101,8 +110,9 @@ click.onclick = function start() {
         var t_y = setInterval(move_y, y_time);
         break;
 
-      case 2: // level 3
-        points = 3;
+      case 10: // level 3
+        level = 3;
+        points += 1;
         x_time = 35;
         y_time = 35;
         clearInterval(t_x);
@@ -111,8 +121,9 @@ click.onclick = function start() {
         var t_y = setInterval(move_y, y_time);
         break;
 
-      case 3: // level 4
-        points = 4;
+      case 15: // level 4
+        level = 4;
+        points += 1;
         x_time = 28;
         y_time = 28;
         clearInterval(t_x);
@@ -121,8 +132,9 @@ click.onclick = function start() {
         var t_y = setInterval(move_y, y_time);
         break;
 
-      case 4: // level 5
-        points = 5;
+      case 20: // level 5
+        level = 5;
+        points += 1;
         x_time = 25;
         y_time = 25;
         clearInterval(t_x);
@@ -131,8 +143,9 @@ click.onclick = function start() {
         var t_y = setInterval(move_y, y_time);
         break;
 
-      case 5: // level 6
-        points = 6;
+      case 25: // level 6
+        level = 6;
+        points += 1;
         x_time = 22;
         y_time = 22;
         clearInterval(t_x);
@@ -141,8 +154,9 @@ click.onclick = function start() {
         var t_y = setInterval(move_y, y_time);
         break;
 
-      case 6: // level 7
-        points = 7;
+      case 30: // level 7
+        level = 7;
+        points += 1;
         x_time = 18;
         y_time = 18;
         clearInterval(t_x);
@@ -151,8 +165,9 @@ click.onclick = function start() {
         var t_y = setInterval(move_y, y_time);
         break;
 
-      case 7: // level 8
-        points = 8;
+      case 35: // level 8
+        level = 8;
+        points += 1;
         x_time = 15;
         y_time = 15;
         clearInterval(t_x);
@@ -161,8 +176,9 @@ click.onclick = function start() {
         var t_y = setInterval(move_y, y_time);
         break;
 
-      case 8: // level 9
-        points = 9;
+      case 40: // level 9
+        level = 9;
+        points += 1;
         x_time = 8;
         y_time = 8;
         clearInterval(t_x);
@@ -171,8 +187,9 @@ click.onclick = function start() {
         var t_y = setInterval(move_y, y_time);
         break;
 
-      case 9: // level 10
-        points = 10;
+      case 45: // level 10
+        level = 10;
+        points += 1;
         x_time = 3;
         y_time = 3;
         clearInterval(t_x);
@@ -181,9 +198,9 @@ click.onclick = function start() {
         var t_y = setInterval(move_y, y_time);
         break;
 
-      default:
-        alert('YOU WIN!');
-        break;
+     default:
+       points +=1;
+       break;
     }
   }
 }
