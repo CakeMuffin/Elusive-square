@@ -65,7 +65,13 @@ function setTop() {
 
 click.onclick = function start() {
   click.style.display = 'none';
-
+//function setCookie() {
+//  document.cookie = "name=oeschger";
+//}
+document.cookie = "name=oeschger";
+//function alertCookie() {
+//  alert(document.cookie);
+//}
 
 
   //The function of generating random numbers in the range for random coordinates.
