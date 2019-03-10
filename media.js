@@ -2,6 +2,7 @@ var move_box = document.getElementById('move_box');
 var position_x = 400;
 var position_y = 400;
 var points = 0;
+var top_points = 0;
 var level = 0;
 var x_time = 50;
 var y_time = 50;
@@ -10,12 +11,64 @@ move_box.style.top = position_y + 'px';
 var click = document.getElementById("start")
 
 
+
+
+function setCookie(cookieName, cookieValue, nDays) {
+  var today = new Date();
+  var expire = new Date();
+  if (nDays == null || nDays == 0)
+    nDays = 1;
+  expire.setTime(today.getTime() + 3600000 * 24 * nDays);
+  document.cookie = cookieName + "=" + escape(cookieValue) +
+    ";expires=" + expire.toGMTString() +
+    ";path=/";
+}
+
+
+function get_cookie(cookie_name) {
+  var results = document.cookie.match('(^|;) ?' + cookie_name + '=([^;]*)(;|$)');
+  if (results)
+    return (unescape(results[2]));
+  else
+    return null;
+}
+
+
+//Check for emptiness of cookies.
+window.onload = function() {
+  if (document.cookie.indexOf("Top") >= 0) {
+    top_points = get_cookie('Top');
+  } else {
+    top();
+
+    function top() {
+      if (points > top_points) {
+        top_points = points;
+        setCookie("Top", top_points, 1);
+        console.log(top_points);
+      }
+    }
+  }
+}
+
+//Constantly check if new record being set.
+setInterval(setTop, 1);
+
+function setTop() {
+  document.getElementById('top_points').value = top_points;
+}
+
+
+
+
+
+
 click.onclick = function start() {
   click.style.display = 'none';
 
 
 
-//The function of generating random numbers in the range for random coordinates.
+  //The function of generating random numbers in the range for random coordinates.
   function getRandomInRange(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
@@ -23,7 +76,7 @@ click.onclick = function start() {
   var t_y = setInterval(move_y, y_time); //Launch functions with random coordinates and moving the "box" element in y axle.
 
 
-//The function of moving the element "box" in x axie. 
+  //The function of moving the element "box" in x axie. 
   function move_x() {
     if (position_x >= 800 || position_x <= 0) {
       clearInterval(t_x);
@@ -43,7 +96,7 @@ click.onclick = function start() {
     }
   }
 
-//The function of moving the element "box" in y axie.
+  //The function of moving the element "box" in y axie.
   function move_y() {
     if (position_y >= 800 || position_y <= 0) {
       clearInterval(t_x);
@@ -63,18 +116,30 @@ click.onclick = function start() {
     }
   }
 
-//Constantly check position of "move_box" and reset timer to stop animation wen hit borders.
+
   move_box.onclick = function() {
     document.getElementById('points').value = points;
     document.getElementById('level').value = level;
-    console.log(points);
-    
+
+
+    //Top points 
+    function top() {
+      if (points > top_points) {
+        top_points = points;
+        setCookie("Top", top_points, 1); //Write value of top points to cookie.
+        console.log(top_points);
+      }
+    }
+    top();
+
+    //Constantly check position of "move_box" and reset timer to stop animation wen hit borders.         
     setInterval(move_z, 1);
 
     function move_z() {
       if (position_y >= 800 || position_y <= 0 || position_x >= 800 || position_x <= 0) {
         clearInterval(t_x);
         clearInterval(t_y);
+
       }
     }
 
@@ -198,9 +263,9 @@ click.onclick = function start() {
         var t_y = setInterval(move_y, y_time);
         break;
 
-     default:
-       points +=1;
-       break;
+      default:
+        points += 1;
+        break;
     }
   }
 }
